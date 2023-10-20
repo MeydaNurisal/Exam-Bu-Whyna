@@ -327,7 +327,41 @@ app.get("/berat/:tipe_berat/:berat", (req, res) => {
     res.json(response);
 });
 
+app.post("/kecepatan", (req, res) => {
+    const { type, diket1, diket2 } = req.body;
+    let hasil = 0;
+    let response;
 
+    if (type === "v") {
+        hasil = Number(diket1) / Number(diket2);
+        response = {
+            dicari: "v",
+            Jarak: diket1 + ' meter',
+            Waktu: diket2 + ' detik',
+            Hasil: hasil + ' m/detik',
+        };
+    } else if (type === "s") {
+        hasil = Number(diket1) * Number(diket2);
+        response = {
+            dicari: "s",
+            Kecepatan: diket1 + ' m/detik',
+            Waktu: diket2 + ' detik',
+            Hasil: hasil + ' meter',
+        };
+    } else if (type === "t") {
+        hasil = Number(diket1) / Number(diket2);
+        response = {
+            dicari: "t",
+            Jarak: diket1 + ' Meter',
+            Kecepatan: diket2 + ' m/detik',
+            Hasil: hasil.toFixed(2) + ' detik',
+        };
+    } else {
+        response = "Tipe tidak ada!\nCoba salah satu dari berikut Tipe:[v,s,t]";
+    }
+
+    res.json(response);
+});
 
 // menjalankan server pada port 8000
 app.listen(8000, () => {
